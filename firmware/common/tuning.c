@@ -74,8 +74,7 @@ bool set_freq(const uint64_t freq)
 #ifdef RAD1O
 		max2837_freq_nominal_hz = 2300000000;
 #else
-		/* IF is graduated from 2650 MHz to 2343 MHz */
-		max2837_freq_nominal_hz = 2650000000 - (freq / 7);
+		max2837_freq_nominal_hz = 2650000000;
 #endif
 		mixer_freq_mhz = (max2837_freq_nominal_hz / FREQ_ONE_MHZ) + freq_mhz;
 		/* Set Freq and read real freq */
