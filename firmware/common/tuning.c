@@ -77,6 +77,8 @@ bool set_freq(const uint64_t freq)
 		max2837_freq_nominal_hz = 2650000000;
 		if((freq_mhz > 1290 ) && (freq_mhz < 1350 ))
 		  max2837_freq_nominal_hz = 2250000000;
+		if((freq_mhz > 1750 ) && (freq_mhz < 1780 ))
+		  max2837_freq_nominal_hz = 2250000000;
 #endif
 		mixer_freq_mhz = (max2837_freq_nominal_hz / FREQ_ONE_MHZ) + freq_mhz;
 		/* Set Freq and read real freq */
@@ -117,7 +119,7 @@ bool set_freq(const uint64_t freq)
 			/* IF is graduated from 2350 MHz to 2650 MHz */
 //			max2837_freq_nominal_hz = 2350000000 + ((freq - 3600000000) / 5);
 			max2837_freq_nominal_hz = 2350000000;
-			if(freq_mhz<4850)
+			if(freq_mhz<4875)
 			{
 				if(freq_mhz>4450)
 					max2837_freq_nominal_hz = 2650000000;
