@@ -75,6 +75,8 @@ bool set_freq(const uint64_t freq)
 		max2837_freq_nominal_hz = 2300000000;
 #else
 		max2837_freq_nominal_hz = 2650000000;
+		if((freq_mhz > 1290 ) && (freq_mhz < 1350 ))
+		  max2837_freq_nominal_hz = 2250000000;
 #endif
 		mixer_freq_mhz = (max2837_freq_nominal_hz / FREQ_ONE_MHZ) + freq_mhz;
 		/* Set Freq and read real freq */
@@ -92,10 +94,34 @@ bool set_freq(const uint64_t freq)
 	{
 		if (freq_mhz < MID1_HP_FREQ_MHZ) {
 			/* IF is graduated from 2150 MHz to 2750 MHz */
-			max2837_freq_nominal_hz = 2150000000 + (((freq - 2750000000) * 60) / 85);
+//			max2837_freq_nominal_hz = 2350000000 - (freq - 2750000000) / 11;
+			max2837_freq_nominal_hz = 2350000000;
+			if(freq_mhz<2835)
+			{
+				if(freq_mhz>2805)
+					max2837_freq_nominal_hz = 2300000000;
+			}else if(freq_mhz<2950)
+			{
+				if(freq_mhz>2920)
+					max2837_freq_nominal_hz = 2300000000;
+			}else if(freq_mhz<3142)
+			{
+				if(freq_mhz>3125)
+					max2837_freq_nominal_hz = 2300000000;
+			}else if(freq_mhz<3537)
+			{
+				if(freq_mhz>3513)
+					max2837_freq_nominal_hz = 2300000000;
+			}
 		} else if (freq_mhz < MID2_HP_FREQ_MHZ) {
 			/* IF is graduated from 2350 MHz to 2650 MHz */
-			max2837_freq_nominal_hz = 2350000000 + ((freq - 3600000000) / 5);
+//			max2837_freq_nominal_hz = 2350000000 + ((freq - 3600000000) / 5);
+			max2837_freq_nominal_hz = 2350000000;
+			if(freq_mhz<4850)
+			{
+				if(freq_mhz>4450)
+					max2837_freq_nominal_hz = 2650000000;
+			}
 		} else {
 			/* IF is graduated from 2500 MHz to 2738 MHz */
 			max2837_freq_nominal_hz = 2500000000 + ((freq - 5100000000) / 9);
