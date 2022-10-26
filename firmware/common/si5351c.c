@@ -20,11 +20,14 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <string.h>
 #include "si5351c.h"
 
 #include <stdbool.h>
 
 static enum pll_sources active_clock_source = PLL_SOURCE_UNINITIALIZED;
+#define I2C_RETRYS 3
+
 /* External clock output default is deactivated as it creates noise */
 static bool clkout_enabled = false;
 
@@ -32,7 +35,13 @@ static bool clkout_enabled = false;
 void si5351c_write_single(si5351c_driver_t* const drv, uint8_t reg, uint8_t val)
 {
 	const uint8_t data_tx[] = {reg, val};
-	si5351c_write(drv, data_tx, 2);
+	uint8_t read_back = 0;
+	for (int k = 0; k < I2C_RETRYS; k++) {
+		si5351c_write(drv, data_tx, 2);
+		read_back = si5351c_read_single(drv, reg);
+		if (read_back == val)
+			break;
+	}
 }
 
 /* read single register */
@@ -53,7 +62,13 @@ void si5351c_write(
 	const uint8_t* const data,
 	const size_t data_count)
 {
-	i2c_bus_transfer(drv->bus, drv->i2c_address, data, data_count, NULL, 0);
+	static uint8_t tmp[10];
+	for (int k = 0; k < I2C_RETRYS; k++) {
+		i2c_bus_transfer(drv->bus, drv->i2c_address, data, data_count, NULL, 0);
+		i2c_bus_transfer(drv->bus, drv->i2c_address, data, 1, tmp, data_count - 1);
+		if (memcmp(tmp, &data[1], data_count - 1) == 0)
+			break;
+	}
 }
 
 /* Disable all CLKx outputs. */
