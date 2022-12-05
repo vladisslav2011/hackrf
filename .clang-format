@@ -8,12 +8,11 @@
 #
 ---
 AlignAfterOpenBracket: AlwaysBreak
-AlignArrayOfStructures: None
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 AlignConsecutiveMacros: true
 AlignEscapedNewlines: Left
-AlignOperands: DontAlign
+AlignOperands: false
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: false
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -25,7 +24,6 @@ AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
-AttributeMacros: ['ADDAPI', 'ADDCALL']
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping:
@@ -60,12 +58,10 @@ KeepEmptyLinesAtTheStartOfBlocks: false
 MaxEmptyLinesToKeep: 1
 PenaltyBreakAssignment: 0
 PenaltyBreakBeforeFirstCallParameter: 0
-PenaltyBreakOpenParenthesis: 0
 PenaltyExcessCharacter: 100
 PenaltyReturnTypeOnItsOwnLine: 1000
 PointerAlignment: Left
 ReflowComments: false
-SeparateDefinitionBlocks: Always
 SortIncludes: false
 SpaceAfterCStyleCast: true
 SpaceBeforeAssignmentOperators: true
